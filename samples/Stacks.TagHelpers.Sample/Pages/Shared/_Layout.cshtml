@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Stacks.TagHelpers.Sample</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@@stackoverflow/stacks/dist/css/stacks.min.css">
+</head>
+<body>
+    <div class="mx-auto w80 wmx12">
+        @RenderBody()
+    </div>
+
+    <script src="https://unpkg.com/@@stackoverflow/stacks/dist/js/stacks.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

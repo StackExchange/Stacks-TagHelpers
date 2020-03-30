@@ -1,0 +1,81 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+
+    string gravatar = "https://www.gravatar.com/avatar/10000000000000000000000000000000?d=identicon";
+}
+
+<div>
+    svg:
+    <s-svg Name="Alert" class="fc-red-400" />
+
+    <br />
+    <br />
+
+    <avatar letter="'S'" size="Medium" badge-icon="ShieldXsm" class="bg-blue-400" />
+    <avatar size="Large" badge-icon="ShieldXsm" image="@gravatar" class="bg-blue-400" />
+
+    <br />
+    <br />
+
+    <badge>Test badge</badge>
+    <badge image="@gravatar&s=16">Test badge</badge>
+    <badge size="Mini" type="Gold">Mini gold!</badge>
+
+    <br />
+    <br />
+    <div class="ps-relative">
+        <banner type="Info" shown="true" class="ps-relative" style="transform: none;">This is a test</banner>
+        <banner type="Warning" shown="true" important="true" class="ps-relative" style="transform: none;">
+            <div class="grid grid__center jc-space-between s-banner--container" role="alertdialog" aria-describedby="notice-message">
+                <div class="grid gs8 gsx mx0" aria-label="notice-message">
+                    <div class="grid--cell">
+                        <s-svg name="Lock" />
+                    </div>
+                    <div class="grid--cell">
+                        <p class="m0"><strong>Stacks is currently frozen in read-only mode.</strong> Contact the team to restore access.</p>
+                    </div>
+                </div>
+                <div class="grid--cell ml-auto myn8" aria-label="notice-dismiss">
+                    <a class="p8 s-btn grid grid__center fc-dark js-notice-close" role="status" aria-hidden="true">
+                        <s-svg name="Clear" />
+                    </a>
+                </div>
+            </div>
+        </banner>
+    </div>
+
+    <br />
+    <br />
+
+    <popover visible="true" arrow="TopLeft" class="ws2 ps-relative">
+        <div class="tt-uppercase fs-fine fc-light">
+            Saved filters
+        </div>
+        <div class="fc-black-300 fs-caption ta-center p16">
+            Save custom sorting &amp; filtering for easy access.
+        </div>
+    </popover>
+
+    <button s-popover-toggle popover-id="test-popover1" placement="RightEnd" type="button">Toggle popover</button>
+    <popover id="test-popover1">This is a test.</popover>
+
+    <br />
+    <br />
+
+    <div s-modal-toggle>
+        <button type="button" modal-action="Show">Toggle modal</button>
+        <modal title="Example title" modal-target="Modal">
+            <modal-body>
+                Nullam ornare lectus vitae lacus sagittis, at sodales leo viverra. Suspendisse nec nulla dignissim elit varius tempus.
+                Cras viverra neque at imperdiet vehicula. Curabitur condimentum id dolor vitae ultrices.
+                Pellentesque scelerisque nunc sit amet leo fringilla bibendum. Etiam feugiat imperdiet mi, eu blandit arcu cursus a.
+            </modal-body>
+            <modal-footer class="grid gs8 gsx">
+                <button class="grid--cell s-btn s-btn__primary" type="button" modal-target="InitialFocus">Save changes</button>
+                <button class="grid--cell s-btn" type="button" modal-action="Hide">Cancel</button>
+            </modal-footer>
+        </modal>
+    </div>
+</div>
