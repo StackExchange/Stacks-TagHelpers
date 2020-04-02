@@ -1,0 +1,15 @@
+﻿@page
+@{
+    ViewData["Title"] = "Popovers";
+}
+<popover visible="true" arrow="TopLeft" class="ws2 ps-relative">
+    <div class="tt-uppercase fs-fine fc-light">
+        Saved filters
+    </div>
+    <div class="fc-black-300 fs-caption ta-center p16">
+        Save custom sorting &amp; filtering for easy access.
+    </div>
+</popover>
+
+<button s-popover-toggle popover-id="test-popover1" placement="RightEnd" type="button">Toggle popover</button>
+<popover id="test-popover1">This is a test.</popover>

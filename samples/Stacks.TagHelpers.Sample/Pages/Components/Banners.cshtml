@@ -1,0 +1,24 @@
+﻿@page
+@{
+    ViewData["Title"] = "Banners";
+}
+<div class="ps-relative">
+    <banner type="Info" shown="true" class="ps-relative" style="transform: none;">This is a test</banner>
+    <banner type="Warning" shown="true" important="true" class="ps-relative" style="transform: none;">
+        <div class="grid grid__center jc-space-between s-banner--container" role="alertdialog" aria-describedby="notice-message">
+            <div class="grid gs8 gsx mx0" aria-label="notice-message">
+                <div class="grid--cell">
+                    <s-svg name="Lock" />
+                </div>
+                <div class="grid--cell">
+                    <p class="m0"><strong>Stacks is currently frozen in read-only mode.</strong> Contact the team to restore access.</p>
+                </div>
+            </div>
+            <div class="grid--cell ml-auto myn8" aria-label="notice-dismiss">
+                <a class="p8 s-btn grid grid__center fc-dark js-notice-close" role="status" aria-hidden="true">
+                    <s-svg name="Clear" />
+                </a>
+            </div>
+        </div>
+    </banner>
+</div>
