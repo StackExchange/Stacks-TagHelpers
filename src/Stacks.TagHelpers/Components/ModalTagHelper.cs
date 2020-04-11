@@ -92,7 +92,7 @@ namespace Stacks.TagHelpers.Components
 
     }
 
-    public class ModalContext
+    internal class ModalContext
     {
         public string UniqueId { get; set; }
 
