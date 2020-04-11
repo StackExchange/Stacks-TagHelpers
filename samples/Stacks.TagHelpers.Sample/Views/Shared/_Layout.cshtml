@@ -73,7 +73,7 @@
                 @{
                     //TODO super hack!
                     var directory = new ValueTuple<string, string[]>[] {
-                        ("Components", new[] { "Index", "Avatar", "Badge", "Banner", "Breadcrumbs", "Button", "Modal", "Popover", "Svg" })
+                        ("Components", new[] { "Index", "Avatar", "Badge", "Banner", "Breadcrumbs", "Button", "Button Group", "Modal", "Popover", "Svg" })
                     };
                 }
 
@@ -89,11 +89,11 @@
                                 {
                                     //TODO haaaaaaack
                                     var isIndex = link == "Index";
-                                    var pageLink =  isIndex ? "" : "components/" + link;
+                                    var pageLink =  isIndex ? "" : "components/" + link.Replace(" ", "");
                                     var currentPage = Context.Request.Path.Value.Replace("/components/", "").Trim('/');
-                                    var isCurrentPage = isIndex ? currentPage == "" || currentPage == "index" : link.Equals(currentPage, StringComparison.OrdinalIgnoreCase);
+                                    var isCurrentPage = isIndex ? currentPage == "" || currentPage == "index" : link.Replace(" ", "").Equals(currentPage, StringComparison.OrdinalIgnoreCase);
                                     <li>
-                                        <a class="grid jc-space-between ai-center py6 px12 s-link s-link__muted mx4 @(isCurrentPage ? "bg-orange-400 bar-pill fc-white" : "")" href="~/@pageLink.ToLower()">
+                                        <a class="grid jc-space-between ai-center py6 px12 s-link s-link__muted mx4 @(isCurrentPage ? "bg-orange-400 bar-pill fc-white" : "")" href="~/@pageLink">
                                             <span class="grid--cell">
                                                 @link
                                             </span>
