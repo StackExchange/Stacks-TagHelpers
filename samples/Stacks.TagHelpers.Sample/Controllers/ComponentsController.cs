@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Stacks.TagHelpers.Sample.Models;
-using System.Diagnostics;
 using System.IO;
 
 namespace Stacks.TagHelpers.Sample.Controllers
 {
     public class ComponentsController : Controller
     {
-        private IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
 
         public ComponentsController(IWebHostEnvironment hostingEnvironment)
         {
@@ -29,15 +28,14 @@ namespace Stacks.TagHelpers.Sample.Controllers
                 return NotFound();
             }
 
-            using (var stream = file.CreateReadStream())
-            using (var fileReader = new StreamReader(stream))
+            using var stream = file.CreateReadStream();
+            using var fileReader = new StreamReader(stream);
+
+            return View(new ComponentViewModel
             {
-                return View(new ComponentViewModel
-                {
-                    ViewName = camelCasedName,
-                    ViewContent = fileReader.ReadToEnd()
-                });
-            }
+                ViewName = camelCasedName,
+                ViewContent = fileReader.ReadToEnd()
+            });
         }
     }
 }
