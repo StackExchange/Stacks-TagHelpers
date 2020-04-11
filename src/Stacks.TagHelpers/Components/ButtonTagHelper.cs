@@ -50,7 +50,7 @@ namespace Stacks.TagHelpers.Components
         public bool Link { get; set; }
         public bool Selected { get; set; }
 
-        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             if (State == ButtonState.Primary && Weight != ButtonWeight.Clear)
             {
@@ -132,8 +132,6 @@ namespace Stacks.TagHelpers.Components
             {
                 output.AddClass("s-btn__link");
             }
-
-            output.Content.AppendHtml(await output.GetChildContentAsync());
         }
     }
 
