@@ -36,7 +36,6 @@
     </div>
 
     <div class="grid mx-auto w100 wmx12">
-
         <div class="grid--cell fl-shrink0 ws2 md:w-auto md:d-none print:d-none js-navigation">
             <div class="overflow-y-scroll overflow-x-hidden bg-white z-nav py12 fs-body1 ps-fixed wmn2 t64 b0 sm:w100 sm:pb0">
                 <div class="d-none sm:d-block">
@@ -74,7 +73,7 @@
                 @{
                     //TODO super hack!
                     var directory = new ValueTuple<string, string[]>[] {
-                        ("Components", new[] { "Index", "Avatars", "Badges", "Banners", "Modals", "Popovers", "Svg" })
+                        ("Components", new[] { "Index", "Avatar", "Badge", "Banner", "Modal", "Popover", "Svg" })
                     };
                 }
 
@@ -115,7 +114,6 @@
                 <p class="stacks-copy stacks-copy__lg">
                     @ViewData["Description"]
                 </p>
-
 
                 @RenderBody()
             </div>

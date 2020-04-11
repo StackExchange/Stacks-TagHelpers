@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stacks.TagHelpers", "src\Stacks.TagHelpers\Stacks.TagHelpers.csproj", "{BE635A38-4E4F-497D-8947-4508A9EB92ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stacks.TagHelpers.Sample", "samples\Stacks.TagHelpers.Sample\Stacks.TagHelpers.Sample.csproj", "{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stacks.TagHelpers.Sample", "samples\Stacks.TagHelpers.Sample\Stacks.TagHelpers.Sample.csproj", "{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +21,10 @@ Global
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
