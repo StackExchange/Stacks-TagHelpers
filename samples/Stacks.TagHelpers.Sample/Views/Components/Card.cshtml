@@ -1,19 +1,27 @@
-﻿<card class="wmx3">
-    <card-title>Base card title</card-title>
-    <card-body>This is a description of the card’s content.</card-body>
-    <card-footer class="grid gsx gs4">
-        <button class="grid--cell s-btn s-btn__primary s-btn__sm">Call to action</button>
-        <button class="grid--cell s-btn s-btn__sm">Cancel</button>
-    </card-footer>
-</card>
+﻿<section title="Basic">
+    <card class="wmx3">
+        <card-title>Base card title</card-title>
+        <card-body>This is a description of the card’s content.</card-body>
+        <card-footer class="grid gsx gs4">
+            <button class="grid--cell s-btn s-btn__primary s-btn__sm">Call to action</button>
+            <button class="grid--cell s-btn s-btn__sm">Cancel</button>
+        </card-footer>
+    </card>
+</section>
 
-<hr />
+<section title="Linked">
+    <card href="#" class="wmx3 d-block h:bs-md">
+        <card-title>Base card title</card-title>
+        <card-body>This is a description of the card’s content.</card-body>
+        <card-footer class="grid gsx gs4">
+            <p class="fs-body1 s-link">Learn more</p>
+        </card-footer>
+    </card>
+</section>
 
-<card>
-    <card-title>Base card title</card-title>
-    <card-body class="fs-body3 lh-sm fc-dark">This is a description of the card’s content.</card-body>
-    <card-footer class="grid gsx gs4">
-        <button class="grid--cell s-btn s-btn__primary s-btn__sm">Call to action</button>
-        <button class="grid--cell s-btn s-btn__sm">Cancel</button>
-    </card-footer>
-</card>
+<section title="Muted">
+    <card muted="true">
+        <card-title>Base card title</card-title>
+        <card-body class="fs-body3 lh-sm fc-dark">This is a description of the card’s content.</card-body>
+    </card>
+</section>

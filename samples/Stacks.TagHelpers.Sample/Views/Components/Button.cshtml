@@ -1,48 +1,50 @@
-﻿<button s-btn>Ask a question</button>
-<a href="#" s-btn>Ask a question</a>
-<button s-btn weight="Outlined">Ask a question</button>
-<button s-btn weight="Filled">Ask a question</button>
+﻿<section title="Weights">
+    <button s-btn>Ask a question</button>
+    <a href="#" s-btn>Ask a question</a>
+    <button s-btn weight="Outlined">Ask a question</button>
+    <button s-btn weight="Filled">Ask a question</button>
+</section>
 
-<hr />
+<section title="States">
+    <button s-btn state="Primary">Ask a question</button>
+    <button s-btn state="Danger">Ask a question</button>
+    <button s-btn state="Muted">Ask a question</button>
+</section>
 
-<button s-btn state="Primary">Ask a question</button>
-<button s-btn state="Danger">Ask a question</button>
-<button s-btn state="Muted">Ask a question</button>
+<section title="Modifiers">
+    <button s-btn loading="true">Ask a question</button>
+    <button s-btn dropdown="true">Ask a question</button>
+    <button s-btn unset="true">Ask a question</button>
+    <button s-btn link="true">Ask a question</button>
+    <button s-btn selected="true">Ask a question</button>
+</section>
 
-<hr />
+<section title="Branding">
+    <button s-btn branding="Facebook">Ask a question</button>
+    <button s-btn branding="Google">Ask a question</button>
+    <button s-btn branding="Github">Ask a question</button>
+</section>
 
-<button s-btn loading="true">Ask a question</button>
-<button s-btn dropdown="true">Ask a question</button>
-<button s-btn unset="true">Ask a question</button>
-<button s-btn link="true">Ask a question</button>
-<button s-btn selected="true">Ask a question</button>
+<section title="Sizing">
+    <button s-btn size="XSmall">Ask a question</button>
+    <button s-btn size="Small">Ask a question</button>
+    <button s-btn size="Medium">Ask a question</button>
+    <button s-btn size="Large">Ask a question</button>
+    <button s-btn size="XLarge">Ask a question</button>
+</section>
 
-<hr />
+<section title="Badges and Icons">
+    <button s-btn state="Danger">
+        <s-svg name="Trash" s-btn-icon /> Delete
+    </button>
 
-<button s-btn branding="Facebook">Ask a question</button>
-<button s-btn branding="Google">Ask a question</button>
-<button s-btn branding="Github">Ask a question</button>
+    <button s-btn weight="Outlined">
+        Test
+        <button-badge>text</button-badge>
+    </button>
 
-<hr />
-
-<button s-btn size="XSmall">Ask a question</button>
-<button s-btn size="Small">Ask a question</button>
-<button s-btn size="Medium">Ask a question</button>
-<button s-btn size="Large">Ask a question</button>
-<button s-btn size="XLarge">Ask a question</button>
-
-<hr />
-
-<button s-btn state="Danger">
-    <s-svg name="Trash" s-btn-icon /> Delete
-</button>
-
-<button s-btn weight="Outlined">
-    Test
-    <button-badge>text</button-badge>
-</button>
-
-<button s-btn weight="Outlined">
-    Active
-    <button-badge number="true">198</button-badge>
-</button>
+    <button s-btn weight="Outlined">
+        Active
+        <button-badge number="true">198</button-badge>
+    </button>
+</section>
