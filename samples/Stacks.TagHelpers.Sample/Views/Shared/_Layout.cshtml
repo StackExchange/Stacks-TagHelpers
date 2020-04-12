@@ -75,24 +75,26 @@
                     var directory = new ValueTuple<string, string[]>[] {
                         ("", new[] { "Index" }),
                         ("Components", new[] { "Avatar", "Badge", "Banner", "Breadcrumbs", "Button", "Button Group", "Card", "Checkbox", "Modal", "Popover", "Svg" }),
-                        ("Email", new string[] { })
+                        ("Email", new string[] { "EButton" })
                     };
                 }
 
                 <ul id="nav" class="list-reset">
                     @foreach (var directorySection in directory)
                     {
+                        var dsection = directorySection.Item1;
+
                         <li class="mb16">
                             <div class="px16 py6 fw-bold tt-uppercase fs-fine mt16">
-                                @directorySection.Item1
+                                @dsection
                             </div>
                             <ul class="list-reset">
                                 @foreach (var link in directorySection.Item2)
                                 {
                                     //TODO haaaaaaack
                                     var isIndex = link == "Index";
-                                    var pageLink =  isIndex ? "" : directorySection.Item1.ToLower() + "/" + link.Replace(" ", "");
-                                    var currentPage = Context.Request.Path.Value.Replace("/components/", "").Trim('/');
+                                    var pageLink =  isIndex ? "" : dsection.ToLower() + "/" + link.Replace(" ", "");
+                                    var currentPage = Context.Request.Path.Value.Replace("/" + dsection.ToLower() + "/", "").Trim('/');
                                     var isCurrentPage = isIndex ? currentPage == "" || currentPage == "index" : link.Replace(" ", "").Equals(currentPage, StringComparison.OrdinalIgnoreCase);
                                     <li>
                                         <a class="grid jc-space-between ai-center py6 px12 s-link s-link__muted mx4 @(isCurrentPage ? "bg-orange-400 bar-pill fc-white" : "")" href="~/@pageLink">

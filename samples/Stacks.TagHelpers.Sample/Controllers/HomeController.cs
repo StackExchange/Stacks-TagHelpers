@@ -37,11 +37,27 @@ namespace Stacks.TagHelpers.Sample.Controllers
         [Route("~/Components/{component}")]
         public async Task<IActionResult> Component(string component)
         {
-            ViewBag.Title = component.ToLower() + " Tag Helper";
+            return await RenderSample(component, "Components");
+        }
 
-            var camelCasedName = char.ToUpper(component[0]) + component.Substring(1);
+        [Route("~/Email/{component}")]
+        public async Task<IActionResult> Email(string component)
+        {
+            return await RenderSample(component, "Email");
+        }
 
-            var path = "Views/Components/" + camelCasedName + ".cshtml";
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //TODO document
+        private async Task<IActionResult> RenderSample(string componentName, string section)
+        {
+            ViewBag.Title = componentName.ToLower() + " Tag Helper";
+
+            var path = "Views/" + section + "/" + componentName + ".cshtml";
             var file = _env.ContentRootFileProvider.GetFileInfo(path);
 
             if (!file.Exists)
@@ -49,13 +65,7 @@ namespace Stacks.TagHelpers.Sample.Controllers
                 return NotFound();
             }
 
-            return View(await GetViewModel(path, file));
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("Component", await GetViewModel(path, file));
         }
 
         //TODO document
