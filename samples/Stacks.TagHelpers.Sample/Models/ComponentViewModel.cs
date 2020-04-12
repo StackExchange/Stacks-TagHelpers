@@ -2,7 +2,7 @@
 {
     public class ComponentViewModel
     {
-        public string ViewName { get; set; }
+        public string ViewPath { get; set; }
         public string ViewContent { get; set; }
     }
 }
