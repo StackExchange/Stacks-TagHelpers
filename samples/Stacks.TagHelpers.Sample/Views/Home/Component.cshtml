@@ -1,7 +1,46 @@
 ﻿@model ComponentViewModel
 
-<pre class="wmx100 overflow-auto">
+<div class="tab-container">
+    <div class="tab-controls s-navigation">
+        <a href="#" class="s-navigation--item is-selected" data-tab="#example-1">Example</a>
+        <a href="#" class="s-navigation--item" data-tab="#rendered-1">Rendered</a>
+    </div>
+    <pre id="example-1" class="tab-content wmx100 hmx3 overflow-auto">
 @Model.ViewContent
-</pre>
+    </pre>
 
-<partial name="@Model.ViewPath"  />
+    <pre id="rendered-1" class="tab-content d-none wmx100 hmx3 overflow-auto">
+@Model.RenderedContent
+    </pre>
+</div>
+
+@Html.Raw(Model.RenderedContent)
+
+@section scripts {
+    <script>
+        // TODO if only we had a Stacks component for this
+        // set up the tabs on this page
+        document.querySelectorAll(".tab-controls [data-tab]").forEach(el => {
+            el.addEventListener("click", e => {
+                e.preventDefault();
+                var container = e.target.closest(".tab-container");
+                var selector = e.target.dataset.tab;
+
+                if (!container || !selector) {
+                    return;
+                }
+
+                container.querySelectorAll(`.tab-content:not(${selector})`).forEach(t => {
+                    t.classList.toggle("d-none", true);
+                });
+
+                container.querySelectorAll(`.tab-controls .is-selected`).forEach(t => {
+                    t.classList.toggle("is-selected", false);
+                });
+
+                container.querySelector(selector).classList.toggle("d-none", false);
+                e.target.classList.toggle("is-selected", true);
+            });
+        });
+    </script>
+}

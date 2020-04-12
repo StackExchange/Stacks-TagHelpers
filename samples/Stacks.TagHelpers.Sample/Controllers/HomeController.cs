@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
 using Stacks.TagHelpers.Sample.Models;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Stacks.TagHelpers.Sample.Controllers
 {
@@ -10,10 +15,14 @@ namespace Stacks.TagHelpers.Sample.Controllers
     {
 
         private readonly IWebHostEnvironment _env;
+        private readonly ICompositeViewEngine _eng;
+        private readonly IViewBufferScope _vbScope;
 
-        public HomeController(IWebHostEnvironment hostingEnvironment)
+        public HomeController(IWebHostEnvironment hostingEnvironment, ICompositeViewEngine viewEngine, IViewBufferScope viewBufferScope)
         {
             _env = hostingEnvironment;
+            _eng = viewEngine;
+            _vbScope = viewBufferScope;
         }
 
         public IActionResult Index()
@@ -22,7 +31,7 @@ namespace Stacks.TagHelpers.Sample.Controllers
         }
 
         [Route("~/Components/{component}")]
-        public IActionResult Component(string component)
+        public async Task<IActionResult> Component(string component)
         {
             ViewBag.Title = component.ToLower() + " Tag Helper";
 
@@ -38,11 +47,28 @@ namespace Stacks.TagHelpers.Sample.Controllers
 
             using var stream = file.CreateReadStream();
             using var fileReader = new StreamReader(stream);
+            using var writer = new StringWriter();
+
+            var viewPath = "~/" + path;
+
+            ViewEngineResult viewResult = null;
+            viewResult = _eng.GetView(viewPath, viewPath, false);
+
+            // TODO this is a hack if I've ever seen one...
+            // fill the view context with just enough to get the partial rendering
+            var viewContext = new ViewContext {
+                HttpContext = HttpContext,
+                RouteData = RouteData,
+                ActionDescriptor = ControllerContext.ActionDescriptor,
+                FormContext = new Microsoft.AspNetCore.Mvc.ViewFeatures.FormContext()
+            };
 
             return View(new ComponentViewModel
             {
-                ViewPath = "~/" + path,
-                ViewContent = fileReader.ReadToEnd()
+                ViewPath = viewPath,
+                ViewContent = fileReader.ReadToEnd(),
+                // oh boy I sure hope this doesn't cause any issues... maybe there's a better way?
+                RenderedContent = await new PartialTagHelper(_eng, _vbScope) { ViewContext = viewContext, Name = viewPath }.RenderTagHelperAsync()
             });
         }
 

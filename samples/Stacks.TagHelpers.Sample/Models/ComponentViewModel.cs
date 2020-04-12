@@ -4,5 +4,6 @@
     {
         public string ViewPath { get; set; }
         public string ViewContent { get; set; }
+        public string RenderedContent { get; set; }
     }
 }
