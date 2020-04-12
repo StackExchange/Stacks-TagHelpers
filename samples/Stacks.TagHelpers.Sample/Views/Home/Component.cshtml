@@ -1,20 +1,26 @@
-﻿@model ComponentViewModel
+﻿@model IEnumerable<ComponentSampleSet>
 
-<div class="tab-container">
-    <div class="tab-controls s-navigation">
-        <a href="#" class="s-navigation--item is-selected" data-tab="#example-1">Example</a>
-        <a href="#" class="s-navigation--item" data-tab="#rendered-1">Rendered</a>
+@foreach (var sampleSet in Model)
+{
+    <div class="tab-container ba bc-black-3 bar-md mb24">
+        <div class="p16 bb bc-black-3">
+            <h2>@sampleSet.RawContent.Title</h2>
+            <div class="tab-controls s-navigation">
+                <a href="#" class="s-navigation--item is-selected" data-tab="#example-1">Example</a>
+                <a href="#" class="s-navigation--item" data-tab="#rendered-1">Rendered</a>
+            </div>
+        </div>
+
+        <div class="p16">
+            <pre id="example-1" class="tab-content wmx100 hmx3 overflow-auto">@sampleSet.RawContent.Content</pre>
+            <pre id="rendered-1" class="tab-content d-none wmx100 hmx3 overflow-auto">@sampleSet.RenderedContent.Content</pre>
+        </div>
+
+        <div class="preview p16 bt bc-black-3">
+            @Html.Raw(sampleSet.RenderedContent.Content)
+        </div>
     </div>
-    <pre id="example-1" class="tab-content wmx100 hmx3 overflow-auto">
-@Model.ViewContent
-    </pre>
-
-    <pre id="rendered-1" class="tab-content d-none wmx100 hmx3 overflow-auto">
-@Model.RenderedContent
-    </pre>
-</div>
-
-@Html.Raw(Model.RenderedContent)
+}
 
 @section scripts {
     <script>

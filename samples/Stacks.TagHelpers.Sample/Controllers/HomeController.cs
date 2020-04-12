@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
+using Microsoft.Extensions.FileProviders;
 using Stacks.TagHelpers.Sample.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Stacks.TagHelpers.Sample.Controllers
@@ -45,6 +49,19 @@ namespace Stacks.TagHelpers.Sample.Controllers
                 return NotFound();
             }
 
+            return View(await GetViewModel(path, file));
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //TODO document
+        private async Task<IEnumerable<ComponentSampleSet>> GetViewModel(string path, IFileInfo file)
+        {
+
             using var stream = file.CreateReadStream();
             using var fileReader = new StreamReader(stream);
             using var writer = new StringWriter();
@@ -56,26 +73,55 @@ namespace Stacks.TagHelpers.Sample.Controllers
 
             // TODO this is a hack if I've ever seen one...
             // fill the view context with just enough to get the partial rendering
-            var viewContext = new ViewContext {
+            var viewContext = new ViewContext
+            {
                 HttpContext = HttpContext,
                 RouteData = RouteData,
                 ActionDescriptor = ControllerContext.ActionDescriptor,
                 FormContext = new Microsoft.AspNetCore.Mvc.ViewFeatures.FormContext()
             };
 
-            return View(new ComponentViewModel
-            {
-                ViewPath = viewPath,
-                ViewContent = fileReader.ReadToEnd(),
-                // oh boy I sure hope this doesn't cause any issues... maybe there's a better way?
-                RenderedContent = await new PartialTagHelper(_eng, _vbScope) { ViewContext = viewContext, Name = viewPath }.RenderTagHelperAsync()
-            });
+            var rawContent = fileReader.ReadToEnd();
+            // oh boy I sure hope this doesn't cause any issues... maybe there's a better way?
+            var renderedContent = await new PartialTagHelper(_eng, _vbScope) { ViewContext = viewContext, Name = viewPath }.RenderTagHelperAsync();
+
+            // separate out the examples
+            var rawSamples = SeparateExamples(rawContent);
+            var renderedSamples = SeparateExamples(renderedContent);
+
+            // match them up by index
+            var combined = rawSamples.Join(renderedSamples,
+                o => o.Title, i => i.Title,
+                (raw, rendered) => new ComponentSampleSet { RawContent = raw, RenderedContent = rendered });
+
+            return combined;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //TODO document
+        private List<ComponentSample> SeparateExamples(string html)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // oh man, I'm surely going to burn for this
+            // if only TagHelpers would grant me access to their unrendered content, none of this would be necessary
+            var matches = Regex.Matches(html, @"<section title=""(.+?)"">(.+?)</section>", RegexOptions.Singleline);
+
+            // no sections, so just return the entire item as one big example
+            if (matches.Count == 0)
+            {
+                return new List<ComponentSample> { new ComponentSample { Title = "Example", Content = html } };
+            }
+
+            return matches.Select(m => {
+                var content = m.Groups[2].Value;
+
+                // clean up the indentation and leading/trailing whitespace
+                content = content.Replace("\r", "");
+                content = Regex.Replace(content, @"^\s*?(?=<)", "");
+                content = Regex.Replace(content, @"(?<=>)\s*?$", "");
+                content = Regex.Replace(content, @"^\s{4}", "", RegexOptions.Multiline);
+                content = Regex.Replace(content, @"^\s+$", "", RegexOptions.Multiline);
+
+                return new ComponentSample { Title = m.Groups[1].Value, Content = content };
+            }).ToList();
         }
     }
 }
