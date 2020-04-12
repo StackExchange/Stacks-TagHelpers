@@ -96,8 +96,8 @@ namespace Stacks.TagHelpers.Sample.Controllers
             var renderedContent = await new PartialTagHelper(_eng, _vbScope) { ViewContext = viewContext, Name = viewPath }.RenderTagHelperAsync();
 
             // separate out the examples
-            var rawSamples = SeparateExamples(rawContent);
-            var renderedSamples = SeparateExamples(renderedContent);
+            var rawSamples = SeparateExamples(rawContent, true);
+            var renderedSamples = SeparateExamples(renderedContent, false);
 
             // match them up by index
             var combined = rawSamples.Join(renderedSamples,
@@ -108,7 +108,7 @@ namespace Stacks.TagHelpers.Sample.Controllers
         }
 
         //TODO document
-        private List<ComponentSample> SeparateExamples(string html)
+        private List<ComponentSample> SeparateExamples(string html, bool trimIndentation)
         {
             // oh man, I'm surely going to burn for this
             // if only TagHelpers would grant me access to their unrendered content, none of this would be necessary
@@ -121,14 +121,19 @@ namespace Stacks.TagHelpers.Sample.Controllers
             }
 
             return matches.Select(m => {
+                // clean up the indentation and leading/trailing whitespace
                 var content = m.Groups[2].Value;
 
-                // clean up the indentation and leading/trailing whitespace
-                content = content.Replace("\r", "");
-                content = Regex.Replace(content, @"^\s*?(?=<)", "");
-                content = Regex.Replace(content, @"(?<=>)\s*?$", "");
-                content = Regex.Replace(content, @"^\s{4}", "", RegexOptions.Multiline);
+                //// remove leading/trailing whitespace
+                content = content.Trim();
+                // remove empty lines
                 content = Regex.Replace(content, @"^\s+$", "", RegexOptions.Multiline);
+
+                if (trimIndentation)
+                {
+                    // drop the leading 4 spaces in each line
+                    content = Regex.Replace(content, @"^\s{4}", "", RegexOptions.Multiline);
+                }
 
                 return new ComponentSample { Title = m.Groups[1].Value, Content = content };
             }).ToList();
