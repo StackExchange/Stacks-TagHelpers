@@ -117,7 +117,7 @@ namespace Stacks.TagHelpers.Sample.Controllers
             // no sections, so just return the entire item as one big example
             if (matches.Count == 0)
             {
-                return new List<ComponentSample> { new ComponentSample { Title = "Example", Content = html } };
+                return new List<ComponentSample> { new ComponentSample { Title = "", Content = html } };
             }
 
             return matches.Select(m => {

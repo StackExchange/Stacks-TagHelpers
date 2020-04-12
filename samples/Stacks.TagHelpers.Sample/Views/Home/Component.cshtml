@@ -4,7 +4,10 @@
 {
     <div class="tab-container ba bc-black-3 bar-md mb24">
         <div class="p16 bb bc-black-3">
-            <h2>@sampleSet.RawContent.Title</h2>
+            @if (!string.IsNullOrEmpty(sampleSet.RawContent.Title))
+            {
+                <h2>@sampleSet.RawContent.Title</h2>
+            }
             <div class="tab-controls s-navigation">
                 <a href="#" class="s-navigation--item is-selected" data-tab="#example-1">Example</a>
                 <a href="#" class="s-navigation--item" data-tab="#rendered-1">Rendered</a>
@@ -12,8 +15,8 @@
         </div>
 
         <div class="hljs p0 wmx100 hmx3 overflow-auto">
-            <pre id="example-1" class="tab-content m0"><code class="language-html d-block p16">@sampleSet.RawContent.Content</code></pre>
-            <pre id="rendered-1" class="tab-content d-none m0"><code class="language-html d-block p16">@sampleSet.RenderedContent.Content</code></pre>
+            <pre id="example-1" class="tab-content m0"><code class="language-html d-block p16 overflow-visible">@sampleSet.RawContent.Content</code></pre>
+            <pre id="rendered-1" class="tab-content d-none m0"><code class="language-html d-block p16 overflow-visible">@sampleSet.RenderedContent.Content</code></pre>
         </div>
 
         <div class="preview p16 bt bc-black-3">
@@ -22,7 +25,18 @@
     </div>
 }
 
+@section head {
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/railscasts.min.css">
+    <style>
+        /* TODO HACK: override the scrollbar color for the dark bg */
+        .hljs.overflow-auto {
+            --scrollbar: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+}
+
 @section scripts {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
         // TODO if only we had a Stacks component for this
