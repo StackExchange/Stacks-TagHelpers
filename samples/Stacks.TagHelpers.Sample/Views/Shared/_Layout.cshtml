@@ -73,7 +73,9 @@
                 @{
                     //TODO super hack!
                     var directory = new ValueTuple<string, string[]>[] {
-                        ("Components", new[] { "Index", "Avatar", "Badge", "Banner", "Breadcrumbs", "Button", "Button Group", "Card", "Checkbox", "Modal", "Popover", "Svg" })
+                        ("", new[] { "Index" }),
+                        ("Components", new[] { "Avatar", "Badge", "Banner", "Breadcrumbs", "Button", "Button Group", "Card", "Checkbox", "Modal", "Popover", "Svg" }),
+                        ("Email", new string[] { })
                     };
                 }
 
@@ -89,7 +91,7 @@
                                 {
                                     //TODO haaaaaaack
                                     var isIndex = link == "Index";
-                                    var pageLink =  isIndex ? "" : "components/" + link.Replace(" ", "");
+                                    var pageLink =  isIndex ? "" : directorySection.Item1.ToLower() + "/" + link.Replace(" ", "");
                                     var currentPage = Context.Request.Path.Value.Replace("/components/", "").Trim('/');
                                     var isCurrentPage = isIndex ? currentPage == "" || currentPage == "index" : link.Replace(" ", "").Equals(currentPage, StringComparison.OrdinalIgnoreCase);
                                     <li>
