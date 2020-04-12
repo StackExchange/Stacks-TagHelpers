@@ -69,7 +69,7 @@ namespace Stacks.TagHelpers.Components
             if (!string.IsNullOrWhiteSpace(Image))
             {
                 // override the styles entirely to avoid potential conflicts
-                output.Attributes.SetAttribute("style", $@"background-image: url(""{Image}"")");
+                output.Attributes.SetAttribute("style", $"background-image: url('{Image}')");
             }
 
             if (Letter != default)
