@@ -1,13 +1,17 @@
 {
   "name": "stacks.taghelpers.sample",
   "version": "1.0.0",
-  "description": "",
+  "description": "Stack Overflow’s tag helpers library for use with the Stacks design system.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StackExchange/Stacks-TagHelpers.git"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "dotnet watch run"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@stackoverflow/stacks-icons": "^1.33.0"
   }
