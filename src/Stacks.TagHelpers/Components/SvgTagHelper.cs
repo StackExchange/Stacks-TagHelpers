@@ -24,10 +24,18 @@ namespace Stacks.TagHelpers.Components
             // completely replace this tag with the contents
             output.TagName = null;
 
+            var path = Path.Combine(_config.SvgFolderPath, Name + ".svg");
+
+            if (!File.Exists(path))
+            {
+                output.Content.SetHtmlContent("<span>Invalid svg!</span>");
+                return;
+            }
+
             // TODO there is likely a better way to do this
             // TODO check that the file exists
             // TODO cache the content so we don't have to re-read from disk every time
-            var svg = File.ReadAllText(Path.Combine(_config.SvgFolderPath, Name + ".svg"));
+            var svg = File.ReadAllText(path);
 
             // set classes
             if (output.Attributes.ContainsName("class"))
