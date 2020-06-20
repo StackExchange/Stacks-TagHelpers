@@ -28,7 +28,7 @@ namespace Stacks.TagHelpers.Benchmarks
     {
         private readonly RazorRenderer _renderer;
 
-        public string[] ComponentValues => new[] { "Avatar", "Svg" };
+        public string[] ComponentValues => new[] { "Avatar", "Badge", "Banner", "Breadcrumbs", "ButtonGroup", /*"Button",*/ "Card", /*"Checkbox",*/ /*"Modal",*/ /*"Popover",*/ "Svg" };
         public string[] StateValues => new[] { "With", "Without" };
 
         [ParamsSource(nameof(ComponentValues))]
@@ -65,7 +65,7 @@ namespace Stacks.TagHelpers.Benchmarks
         {
             AddDiagnoser(MemoryDiagnoser.Default);
             //AddJob(Job.Default.WithRuntime(ClrRuntime.Net472));
-            AddJob(Job.Default.WithRuntime(CoreRuntime.Core31));
+            //AddJob(Job.Default.WithRuntime(CoreRuntime.Core31));
             //AddJob(new InliningDiagnoser());
         }
     }
