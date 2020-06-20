@@ -14,5 +14,5 @@
 ```
 > cd samples/Stacks.TagHelpers.Benchmarks
 > dotnet restore
-> dotnet run
+> dotnet run -c Release --framework netcoreapp3.1
 ```

@@ -1,5 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Environments;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
@@ -20,9 +23,19 @@ using System.Threading.Tasks;
 
 namespace Stacks.TagHelpers.Benchmarks
 {
+    [Config(typeof(Config))]
     public class TagHelperBenchmarks
     {
         private readonly RazorRenderer _renderer;
+
+        public string[] ComponentValues => new[] { "Avatar", "Svg" };
+        public string[] StateValues => new[] { "With", "Without" };
+
+        [ParamsSource(nameof(ComponentValues))]
+        public string Component { get; set; }
+
+        [ParamsSource(nameof(StateValues))]
+        public string State { get; set; }
 
         public TagHelperBenchmarks()
         {
@@ -30,15 +43,9 @@ namespace Stacks.TagHelpers.Benchmarks
         }
 
         [Benchmark]
-        public async Task With()
+        public async Task Benchmark()
         {
-            await _renderer.RenderAsync<object>("/Views/With.cshtml", null);
-        }
-
-        [Benchmark]
-        public async Task Without()
-        {
-            await _renderer.RenderAsync<object>("/Views/Without.cshtml", null);
+            await _renderer.RenderAsync<object>("/Views/" + Component + State + ".cshtml", null);
         }
     }
 
@@ -50,6 +57,17 @@ namespace Stacks.TagHelpers.Benchmarks
             BenchmarkRunner.Run<TagHelperBenchmarks>(new DebugInProcessConfig());
         }
 
+    }
+
+    internal class Config : ManualConfig
+    {
+        public Config()
+        {
+            AddDiagnoser(MemoryDiagnoser.Default);
+            //AddJob(Job.Default.WithRuntime(ClrRuntime.Net472));
+            AddJob(Job.Default.WithRuntime(CoreRuntime.Core31));
+            //AddJob(new InliningDiagnoser());
+        }
     }
 
     public class RazorRenderer
