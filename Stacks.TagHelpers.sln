@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stacks.TagHelpers", "src\St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stacks.TagHelpers.Sample", "samples\Stacks.TagHelpers.Sample\Stacks.TagHelpers.Sample.csproj", "{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stacks.TagHelpers.Benchmarks", "samples\Stacks.TagHelpers.Benchmarks\Stacks.TagHelpers.Benchmarks.csproj", "{136F29D6-9203-4A94-90F0-8037F6220311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +23,10 @@ Global
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CE1EDEB-0160-4BC2-A3C1-8AAC152B3BA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48EDD873-B056-46BD-8FB1-C6911A45EDD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{136F29D6-9203-4A94-90F0-8037F6220311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{136F29D6-9203-4A94-90F0-8037F6220311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{136F29D6-9203-4A94-90F0-8037F6220311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{136F29D6-9203-4A94-90F0-8037F6220311}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

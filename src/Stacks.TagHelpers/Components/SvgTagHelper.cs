@@ -33,7 +33,6 @@ namespace Stacks.TagHelpers.Components
             }
 
             // TODO there is likely a better way to do this
-            // TODO check that the file exists
             // TODO cache the content so we don't have to re-read from disk every time
             var svg = File.ReadAllText(path);
 
