@@ -65,6 +65,8 @@ namespace Stacks.TagHelpers.Components
             }
 
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.Attributes.TryGetAttribute("s-btn", out var btnAttr);
+            output.Attributes.Remove(btnAttr);
 
             output.AddClass("s-btn");
 
