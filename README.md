@@ -8,3 +8,11 @@
 > dotnet restore
 > dotnet watch run
 ```
+
+## Running the benchmarks
+
+```
+> cd samples/Stacks.TagHelpers.Benchmarks
+> dotnet restore
+> dotnet run
+```
