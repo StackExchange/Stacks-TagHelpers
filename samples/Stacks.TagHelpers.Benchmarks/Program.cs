@@ -1,8 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Environments;
-using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
@@ -27,8 +25,9 @@ namespace Stacks.TagHelpers.Benchmarks
     public class TagHelperBenchmarks
     {
         private readonly RazorRenderer _renderer;
+        public static readonly string[] AllComponents = new[] { "Avatar", "Badge", "Banner", "Breadcrumbs", "ButtonGroup", /*"Button",*/ "Card", /*"Checkbox",*/ /*"Modal",*/ /*"Popover",*/ "Svg" };
 
-        public string[] ComponentValues => new[] { "Avatar", "Badge", "Banner", "Breadcrumbs", "ButtonGroup", /*"Button",*/ "Card", /*"Checkbox",*/ /*"Modal",*/ /*"Popover",*/ "Svg" };
+        public string[] ComponentValues { get; }
         public string[] StateValues => new[] { "With", "Without" };
 
         [ParamsSource(nameof(ComponentValues))]
@@ -40,6 +39,8 @@ namespace Stacks.TagHelpers.Benchmarks
         public TagHelperBenchmarks()
         {
             _renderer = new RazorRenderer();
+            // TODO I bet there's a better way to pass params to the benchmarks without resorting to static properties...
+            ComponentValues = Program.ChosenComponents;
         }
 
         [Benchmark]
@@ -51,8 +52,31 @@ namespace Stacks.TagHelpers.Benchmarks
 
     class Program
     {
-        static void Main()
+        public static string[] ChosenComponents { get; private set; }
+
+        static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Please select which components you'd like to run (comma separated) or type 'All' to run all components:\n" + string.Join('\n', TagHelperBenchmarks.AllComponents));
+                return;
+            }
+            else if (args[0].Equals("all", StringComparison.OrdinalIgnoreCase))
+            {
+                ChosenComponents = TagHelperBenchmarks.AllComponents;
+            }
+            else if (args.Length > 0)
+            {
+                // inner join all entered components and use the value from the AllComponents array for all matched entries
+                ChosenComponents = args[0].Split(',')
+                    .Join(TagHelperBenchmarks.AllComponents, o => o.ToLower().Trim(), i => i.ToLower(), (o, i) => i).ToArray();
+            }
+
+            if (ChosenComponents.Length == 0)
+            {
+                Console.WriteLine("Unable to match any entered values to components");
+                return;
+            }
 
             BenchmarkRunner.Run<TagHelperBenchmarks>(new DebugInProcessConfig());
         }
